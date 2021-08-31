@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import * as net from 'net';
 import * as path from 'path';
 import ShortUniqueId from 'short-unique-id';
 import * as vscode from 'vscode';
@@ -11,6 +12,7 @@ import {
   RevealOutputChannelOn,
   ServerOptions,
   State,
+  StreamInfo,
 } from 'vscode-languageclient/node';
 import * as which from 'which';
 import { CUSTOM_BIN_PATH_OPTION_NAME, ServerPath } from './serverPath';
@@ -165,15 +167,33 @@ export class ClientHandler {
       initializationOptions = Object.assign(initializationOptions, { excludeModulePaths });
     }
 
-    const executable: Executable = {
-      command: cmd,
-      args: serverArgs,
-      options: {},
-    };
-    const serverOptions: ServerOptions = {
-      run: executable,
-      debug: executable,
-    };
+    let serverOptions: ServerOptions = null;
+    const port: number = config('terraform').get('languageServer.tcp_port');
+    if (port) {
+      serverOptions = () => {
+        const socket = new net.Socket();
+        socket.connect({
+          port: port,
+          host: 'localhost',
+        });
+        const result: StreamInfo = {
+          writer: socket,
+          reader: socket,
+        };
+        return Promise.resolve(result);
+      };
+    } else {
+      const executable: Executable = {
+        command: cmd,
+        args: serverArgs,
+        options: {},
+      };
+      serverOptions = {
+        run: executable,
+        debug: executable,
+      };
+    }
+
     const clientOptions: LanguageClientOptions = {
       documentSelector: documentSelector,
       workspaceFolder: wsFolder,

@@ -128,6 +128,10 @@
             "requiredVersion": {
               "type": "string",
               "description": "The required version of the Language Server described as a semantic version string, for example '^2.0.1' or '> 1.0'. Defaults to latest available version."
+            },
+            "tcp_port": {
+              "type": "number",
+              "markdownDescription": "Language server TCP port to connect to. This is not compatible with `#terraform.languageServer.args#` and `#terraform.languageServer.pathToBindary#`. This is used when you want the extension to connect via TCP to an already running Language Server is already running Language Server process."
             }
           },
           "default": {
