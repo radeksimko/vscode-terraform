@@ -230,7 +230,7 @@
     "openpgp": "^4.10.10",
     "semver": "^7.3.5",
     "short-unique-id": "^3.2.3",
-    "vscode-extension-telemetry": "^0.1.7",
+    "vscode-extension-telemetry": "^0.3.2",
     "vscode-languageclient": "^7.0.0-next.12",
     "vscode-uri": "^3.0.2",
     "which": "^2.0.2",
