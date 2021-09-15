@@ -29,4 +29,6 @@ jobs:
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
       - name: git push
-        run: git push --tags
+        run: |
+          git push main
+          git push ${{ github.event.inputs.version }}
