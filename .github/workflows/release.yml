@@ -21,6 +21,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: vsce publish
-        run: npm exec -- vsce publish ${{ github.event.inputs.version }}
+        run: npx -- vsce publish ${{ github.event.inputs.version }}
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
