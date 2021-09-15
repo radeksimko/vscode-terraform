@@ -30,5 +30,6 @@ jobs:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
       - name: git push
         run: |
-          git push origin main
+          $defaultBranch = git branch --show-current
+          git push origin $defaultBranch
           git push origin v${{ github.event.inputs.version }}
