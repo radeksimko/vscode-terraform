@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Version to publish'     
+        description: 'Version to publish & tag & push'     
         required: true
 
 jobs:
@@ -28,3 +28,5 @@ jobs:
         run: npx -- vsce publish ${{ github.event.inputs.version }}
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
+      - name: git push
+        run: git push --tags
