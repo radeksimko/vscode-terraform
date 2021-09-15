@@ -17,7 +17,9 @@ jobs:
     steps:
       - name: Ensure changelog is updated
         if: ${{ github.event.inputs.changelog_updated != 'yes' }}
-        run: exit 1
+        run: |
+          echo "Response: ${{ github.event.inputs.changelog_updated }}"
+          exit 1
       - name: Check out repository
         uses: actions/checkout@v2
       - name: Read Node.js version
