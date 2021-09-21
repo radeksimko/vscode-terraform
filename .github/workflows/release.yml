@@ -45,6 +45,13 @@ jobs:
         with:
           terraform_wrapper: false
           terraform_version: "~1.0"
+      - name: vsce package
+        run: npx -- vsce package --out=${{ runner.temp }}/terraform-${{ steps.ext-version.outputs.content }}.vsix
+      - name: Upload vsix as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: terraform-${{ steps.ext-version.outputs.content }}.vsix
+          path: ${{ runner.temp }}/terraform-${{ steps.ext-version.outputs.content }}.vsix
       - name: Check latest published version
         run: |
           export EXTENSION_ID=`cat package.json | jq -r '.publisher + "." + .name'`
