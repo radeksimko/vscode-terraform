@@ -23,7 +23,7 @@ async function activated() {
 	if (!_activatedPromise) {
 		try {
 			// The extensionId is `publisher.name` from package.json
-			const ext = vscode.extensions.getExtension('hashicorp.terraform');
+			const ext = vscode.extensions.getExtension('hashicorpsandbox.terraform');
 			if (!ext.isActive) {
 				console.log('Activating hashicorp.terraform extension');
 				await ext.activate();
