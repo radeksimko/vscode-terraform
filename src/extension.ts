@@ -12,7 +12,7 @@ import { config, prunedFolderNames } from './vscodeUtils';
 const terraformStatus = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 0);
 
 // Telemetry config
-const extensionId = 'hashicorp.terraform';
+const extensionId = 'hashicorpsandbox.terraform';
 const appInsightsKey = '885372d2-6f3c-499f-9d25-b8b219983a52';
 let reporter: TelemetryReporter;
 
