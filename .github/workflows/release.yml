@@ -40,7 +40,7 @@ jobs:
           terraform_wrapper: false
           terraform_version: "~1.0"
       - name: npm test
-        run: xvfb-run --auto-servernum npm test
+        run: xvfb-run --auto-servernum --listen-tcp --server-args='-screen 0 1024x768x24' npm test
       - name: Configure git author
         run: |
           git config user.email "hashibot-feedback@hashicorp.com"
