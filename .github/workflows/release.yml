@@ -39,16 +39,14 @@ jobs:
         with:
           terraform_wrapper: false
           terraform_version: "~1.0"
-      - name: Set up Xvfb
-        run: |
-          /usr/bin/Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
-          echo ">>> Started xvfb"
-      - name: npm test
-        run: npm test
       - name: Configure git author
         run: |
           git config user.email "hashibot-feedback@hashicorp.com"
           git config user.name "HashiBot"
+      - name: Check latest published extension version
+        run: |
+          export EXTENSION_ID=`cat package.json | jq -r '.publisher + "." + .name'`
+          npx -- vsce show --json $EXTENSION_ID | jq '.versions[0]'
       - name: vsce publish
         run: npx -- vsce publish ${{ github.event.inputs.version }}
         env:
