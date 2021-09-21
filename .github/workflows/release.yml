@@ -39,8 +39,12 @@ jobs:
         with:
           terraform_wrapper: false
           terraform_version: "~1.0"
+      - name: Setup Xvfb
+        run: |
+          Xvfb :99 -screen 0 1024x768x24 &
+          echo ">>> Started xvfb"
       - name: npm test
-        run: xvfb-run --auto-servernum --listen-tcp --server-args='-screen 0 1024x768x24' npm test
+        run: npm test
       - name: Configure git author
         run: |
           git config user.email "hashibot-feedback@hashicorp.com"
