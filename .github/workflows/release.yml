@@ -48,6 +48,6 @@ jobs:
           export EXTENSION_ID=`cat package.json | jq -r '.publisher + "." + .name'`
           npx -- vsce show --json $EXTENSION_ID | jq '.versions[0]'
       - name: vsce publish
-        run: npx -- vsce publish --no-git-tag-version
+        run: npx -- vsce publish --no-git-tag-version --packagePath=${{ runner.temp }}/terraform-${{ steps.ext-version.outputs.content }}.vsix
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
