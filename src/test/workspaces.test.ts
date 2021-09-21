@@ -3,7 +3,7 @@ import * as vscode from 'vscode';
 import { Utils } from 'vscode-uri';
 import { getDocUri, open, testFolderPath } from './helper';
 
-const ext = vscode.extensions.getExtension('hashicorp.terraform');
+const ext = vscode.extensions.getExtension('hashicorpsandbox.terraform');
 
 suite('moduleCallers', () => {
 	test('should execute language server command', async () => {
