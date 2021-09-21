@@ -13,19 +13,19 @@ on:
 jobs:
   publish:
     name: Publish to VS Code Marketplace
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Ensure changelog is updated
         if: ${{ github.event.inputs.changelog_updated != 'yes' }}
         run: |
-          echo "Response: ${{ github.event.inputs.changelog_updated }}"
+          echo "Response: ${{ github.event.inputs.changelog_updated }} (expected yes)"
           exit 1
       - name: Check out repository
         uses: actions/checkout@v2
       - name: Read Node.js version
         id: nodejs-version
         run: |
-          $content = Get-Content .\.nvmrc -Raw
+          content=`cat ./.nvmrc`
           echo "::set-output name=content::$content"
       - name: Set up Node.js
         uses: actions/setup-node@v1
@@ -34,6 +34,13 @@ jobs:
           node-version: ${{ steps.nodejs-version.outputs.content }}
       - name: Install dependencies
         run: npm ci
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_wrapper: false
+          terraform_version: "~1.0"
+      - name: npm test
+        run: npm test
       - name: Configure git author
         run: |
           git config user.email "hashibot-feedback@hashicorp.com"
